@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity
 
 //TODO update every 3 seconds or so
     public static DataModel data;
-    Button buttons[];
+    Button cpuButton, ramButton,driveButton;
     int nc,nd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +37,29 @@ public class MainActivity extends AppCompatActivity
         fillTempData();
         nc = data.getNumCPUs();
         nd = data.getNumDrives();
-        int numButtons = nc + nd +1;
-        buttons = new Button[numButtons];
+        //int numButtons = nc + nd +1;
+        //buttons = new Button[numButtons];
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT );
+        cpuButton = new Button(this);
+        cpuButton.setText(nc+" CPUs");
+        cpuButton.setTag("CPU");
+        ramButton = new Button(this);
+        ramButton.setText(data.getTotRam()+"Mb RAM");
+        ramButton.setTag("Ram");
+        driveButton = new Button(this);
+        driveButton.setTag("DRIVE");
+        driveButton.setText(nd+" Drives");
 
+        cpuButton.setOnClickListener(this);
+        ramButton.setOnClickListener(this);
+        driveButton.setOnClickListener(this);
+
+        linearLayout.addView(ramButton,params);
+        linearLayout.addView(cpuButton,params);
+        linearLayout.addView(driveButton,params);
+
+/*
         for(int i=0;i<numButtons;i++){
             buttons[i]=new Button(this);
             //buttons[i].setText(data.getComponent(i).getName());
@@ -71,7 +89,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+*/
     }
 
     private void fillTempData() {
@@ -143,18 +161,18 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
         String text = (String)((Button)v).getText();
+        Intent myIntent;
         switch((String)v.getTag()){
             case "RAM":
 
                 break;
             case "CPU":
-                int i = Integer.parseInt((String)text.subSequence(4,text.length()));
-                Intent myIntent = new Intent(MainActivity.this, CpuView.class);
-                myIntent.putExtra("cpuNum",i);
+                myIntent = new Intent(MainActivity.this, CpuView.class);
                 startActivity(myIntent);
                 break;
             case "DRIVE":
-
+                myIntent = new Intent(MainActivity.this, DriveView.class);
+                startActivity(myIntent);
                 break;
         }
     }

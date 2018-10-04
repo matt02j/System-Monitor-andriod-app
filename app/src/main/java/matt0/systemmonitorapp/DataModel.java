@@ -18,10 +18,10 @@ public class DataModel {
         if(components.size()==0){
             components.add(new Ram());
             for(int i=0;i<numCPUs;i++){
-                components.add(new Cpu());
+                components.add(new Cpu("Cpu " +i,40,5,4,10));
             }
             for(int i=0;i< numDrives;i++){
-                components.add(new Drive());
+                components.add(new Drive("Drive "+i,40,5,20,10,10));
             }
         }
 

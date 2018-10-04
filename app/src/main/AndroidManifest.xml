@@ -20,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".CpuView" />
+        <activity android:name=".DriveView"></activity>
     </application>
 
 </manifest>
