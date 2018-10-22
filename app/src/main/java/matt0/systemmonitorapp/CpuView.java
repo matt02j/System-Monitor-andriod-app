@@ -4,6 +4,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ public class CpuView extends AppCompatActivity {
         //int cpuNum = 1+ getIntent().getIntExtra("cpuNum",0);
         //Cpu cpu = (Cpu)MainActivity.data.getComponent(cpuNum);
         setContentView(R.layout.activity_cpu);
+
         TableLayout table = findViewById(R.id.cpu_table);
         table.setStretchAllColumns(true);
         for(int i=0;i<=MainActivity.data.numCPUs;i++){
@@ -43,18 +45,18 @@ public class CpuView extends AppCompatActivity {
             }
             else {
                 nameText.setText(cpu.getName());
-                tempText.setText(String.valueOf(cpu.getCurTemp()));
-                usageText.setText(String.valueOf(cpu.getCurUsage()));
-                freqText.setText(String.valueOf(cpu.getFrequency()));
+                tempText.setText(String.format("%.2f",cpu.getCurTemp()));
+                usageText.setText(String.format("%.2f",cpu.getCurUsage()));
+                freqText.setText(String.format("%.2f",cpu.getFrequency()));
 
                 nameText.setTypeface(Typeface.DEFAULT_BOLD);
-                nameText.setTextSize(30);
+                nameText.setTextSize(20);
                 tempText.setTypeface(Typeface.DEFAULT_BOLD);
-                tempText.setTextSize(30);
+                tempText.setTextSize(20);
                 usageText.setTypeface(Typeface.DEFAULT_BOLD);
-                usageText.setTextSize(30);
+                usageText.setTextSize(20);
                 freqText.setTypeface(Typeface.DEFAULT_BOLD);
-                freqText.setTextSize(30);
+                freqText.setTextSize(20);
             }
             nameText.setWidth(row.getWidth()/4);
             tempText.setWidth(row.getWidth()/4);

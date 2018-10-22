@@ -27,6 +27,22 @@ public class DataModel {
 
     }
 
+    public double getCpuAverageUsage(){
+        double sum=0;
+        for(int i=0;i<numCPUs;i++){
+            sum+=components.get(i+1).getCurUsage();
+        }
+        return sum/numCPUs;
+    }
+    public double getDriveAverageUsage(){
+        double sum=0;
+        for(int i=0;i<numDrives;i++){
+            sum+=components.get(numCPUs+i+1).getCurUsage();
+        }
+        return sum/numDrives;
+    }
+
+
     public ArrayList<Component> getComponents() {
         return components;
     }

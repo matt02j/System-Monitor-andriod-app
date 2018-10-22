@@ -1,10 +1,12 @@
 package matt0.systemmonitorapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.text.Layout;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,20 +19,26 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+        implements View.OnClickListener {
 
 //TODO update every 3 seconds or so
     public static DataModel data;
     Button cpuButton, ramButton,driveButton;
     int nc,nd;
+    @SuppressLint({"SetTextI18n", "DefaultLocale"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark,getTheme()));
         setSupportActionBar(toolbar);
 
+        Timer timer = new Timer();
 
         data = new DataModel();
         data.updateData();
@@ -40,26 +48,45 @@ public class MainActivity extends AppCompatActivity
         //int numButtons = nc + nd +1;
         //buttons = new Button[numButtons];
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT );
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         cpuButton = new Button(this);
-        cpuButton.setText(nc+" CPUs");
+        cpuButton.setText(nc + " CPUs - " + String.format("%.2f", data.getCpuAverageUsage()) + " %");
         cpuButton.setTag("CPU");
+        cpuButton.setHapticFeedbackEnabled(true);
         ramButton = new Button(this);
-        ramButton.setText(data.getTotRam()+"Mb RAM");
+        ramButton.setText(data.getTotRam() + "Mb RAM");
         ramButton.setTag("Ram");
         driveButton = new Button(this);
         driveButton.setTag("DRIVE");
-        driveButton.setText(nd+" Drives");
+        driveButton.setText(nd + " Drives - " + String.format("%.2f", data.getDriveAverageUsage()) + " %");
 
         cpuButton.setOnClickListener(this);
         ramButton.setOnClickListener(this);
         driveButton.setOnClickListener(this);
 
-        linearLayout.addView(ramButton,params);
-        linearLayout.addView(cpuButton,params);
-        linearLayout.addView(driveButton,params);
+        linearLayout.addView(ramButton, params);
+        linearLayout.addView(cpuButton, params);
+        linearLayout.addView(driveButton, params);
 
-/*
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                update();
+            }
+
+            private void update() {
+                for(Component x : data.getComponents()){
+                    x.setCurTemp(Math.random()*80);
+                    x.setCurUsage(Math.random()*100);
+                    if(x.getClass() == Cpu.class){
+                        ((Cpu)x).setFrequency(Math.random()*4);
+                    }
+                }
+                cpuButton.setText(nc + " CPUs - " + String.format("%.2f", data.getCpuAverageUsage()) + " %");
+                driveButton.setText(nd + " Drives - " + String.format("%.2f", data.getDriveAverageUsage()) + " %");
+            }
+        }, 3000, 3000);
+/* //this dynamically created buttons :( sad face
         for(int i=0;i<numButtons;i++){
             buttons[i]=new Button(this);
             //buttons[i].setText(data.getComponent(i).getName());
@@ -80,7 +107,7 @@ public class MainActivity extends AppCompatActivity
             buttons[i].setOnClickListener(this);
         }
 
-
+/*
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -92,6 +119,7 @@ public class MainActivity extends AppCompatActivity
 */
     }
 
+
     private void fillTempData() {
         data.addComponent(new Cpu("MYCPU",40,10,2.8,10),data.numCPUs+1);
         data.numCPUs++;
@@ -100,7 +128,7 @@ public class MainActivity extends AppCompatActivity
         data.addComponent(new Drive("MYDRIVE",40,10,600,800,10),data.numCPUs+data.numDrives+1);
         data.numDrives++;
     }
-
+/*
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -157,16 +185,16 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
+*/
     @Override
     public void onClick(View v) {
-        String text = (String)((Button)v).getText();
         Intent myIntent;
         switch((String)v.getTag()){
             case "RAM":
 
                 break;
             case "CPU":
+               // cpuButton.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                 myIntent = new Intent(MainActivity.this, CpuView.class);
                 startActivity(myIntent);
                 break;

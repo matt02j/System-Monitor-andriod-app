@@ -46,10 +46,10 @@ public class DriveView extends AppCompatActivity {
             }
             else {
                 nameText.setText(drive.getName());
-                readText.setText(String.valueOf(drive.getReadSpeed()));
-                writeText.setText(String.valueOf(drive.getWriteSpeed()));
-                tempText.setText(String.valueOf(drive.getCurTemp()));
-                usageText.setText(String.valueOf(drive.getCurUsage()));
+                readText.setText(String.format("%.2f",drive.getReadSpeed()));
+                writeText.setText(String.format("%.2f",drive.getWriteSpeed()));
+                tempText.setText(String.format("%.2f",drive.getCurTemp()));
+                usageText.setText(String.format("%.2f",drive.getCurUsage()));
 
                 nameText.setTypeface(Typeface.DEFAULT_BOLD);
                 nameText.setTextSize(20);
