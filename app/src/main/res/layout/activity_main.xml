@@ -5,17 +5,17 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:color="@color/colorPrimary"
     android:fitsSystemWindows="true"
-    android:visibility="visible"
-    tools:background="?attr/colorPrimary">
+    android:background="@color/black"
+    android:color="@color/black"
+    android:visibility="visible">
 
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
-        android:color="@color/colorPrimary"
+        android:background="@color/black"
+        android:color="@color/black"
         android:visibility="visible" />
 
 

@@ -23,7 +23,7 @@
             android:color="@color/colorPrimary"
             android:visibility="visible"
             app:popupTheme="@style/AppTheme"
-            app:titleTextColor="@color/colorAccent" />
+            app:titleTextColor="@color/lightGreen" />
 
     </android.support.design.widget.AppBarLayout>
 

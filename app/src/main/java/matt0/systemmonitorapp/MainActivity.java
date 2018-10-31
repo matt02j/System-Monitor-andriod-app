@@ -48,25 +48,26 @@ public class MainActivity extends AppCompatActivity
         //int numButtons = nc + nd +1;
         //buttons = new Button[numButtons];
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        cpuButton = new Button(this);
+        cpuButton = (Button) findViewById(R.id.button6);
         cpuButton.setText(nc + " CPUs - " + String.format("%.2f", data.getCpuAverageUsage()) + " %");
         cpuButton.setTag("CPU");
         cpuButton.setHapticFeedbackEnabled(true);
-        ramButton = new Button(this);
+        ramButton = (Button) findViewById(R.id.button7);
         ramButton.setText(data.getTotRam() + "Mb RAM");
         ramButton.setTag("Ram");
-        driveButton = new Button(this);
+        driveButton = (Button) findViewById(R.id.button8);
         driveButton.setTag("DRIVE");
         driveButton.setText(nd + " Drives - " + String.format("%.2f", data.getDriveAverageUsage()) + " %");
 
         cpuButton.setOnClickListener(this);
         ramButton.setOnClickListener(this);
         driveButton.setOnClickListener(this);
-
-        linearLayout.addView(ramButton, params);
-        linearLayout.addView(cpuButton, params);
-        linearLayout.addView(driveButton, params);
+        cpuButton.setBackgroundColor(getResources().getColor(R.color.lightGreen,getTheme()));
+        cpuButton.setTextColor(getResources().getColor(R.color.colorPrimary,getTheme()));
+        ramButton.setBackgroundColor(getResources().getColor(R.color.lightGreen,getTheme()));
+        ramButton.setTextColor(getResources().getColor(R.color.colorPrimary,getTheme()));
+        driveButton.setBackgroundColor(getResources().getColor(R.color.lightGreen,getTheme()));
+        driveButton.setTextColor(getResources().getColor(R.color.colorPrimary,getTheme()));
 
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity
                 cpuButton.setText(nc + " CPUs - " + String.format("%.2f", data.getCpuAverageUsage()) + " %");
                 driveButton.setText(nd + " Drives - " + String.format("%.2f", data.getDriveAverageUsage()) + " %");
             }
-        }, 3000, 3000);
+        }, 100, 10000);
 /* //this dynamically created buttons :( sad face
         for(int i=0;i<numButtons;i++){
             buttons[i]=new Button(this);

@@ -5,6 +5,7 @@
     xmlns:window="http://schemas.android.com/window"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:titleTextColor="@color/lightGreen"
     android:theme="@style/AppTheme"
 
     >
