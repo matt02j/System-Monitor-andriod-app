@@ -34,23 +34,26 @@
             tools:layout_editor_absoluteY="0dp">
 
 
-            <Button
+            <ImageButton
                 android:id="@+id/button6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:src="@drawable/ram_button"
                 android:text="Button" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/button7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:src="@drawable/drive_button"
                 android:layout_margin="10dp"
                 android:text="Button" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/button8"
                 android:layout_width="match_parent"
+                android:src="@drawable/cpu_button"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="Button" />

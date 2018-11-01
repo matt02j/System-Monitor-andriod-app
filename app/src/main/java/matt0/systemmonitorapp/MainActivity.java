@@ -3,20 +3,10 @@ package matt0.systemmonitorapp;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.text.Layout;
-import android.view.HapticFeedbackConstants;
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import java.util.Timer;
@@ -27,7 +17,7 @@ public class MainActivity extends AppCompatActivity
 
 //TODO update every 3 seconds or so
     public static DataModel data;
-    Button cpuButton, ramButton,driveButton;
+    ImageButton cpuButton, ramButton,driveButton;
     int nc,nd;
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
     @Override
@@ -48,26 +38,21 @@ public class MainActivity extends AppCompatActivity
         //int numButtons = nc + nd +1;
         //buttons = new Button[numButtons];
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        cpuButton = (Button) findViewById(R.id.button6);
-        cpuButton.setText(nc + " CPUs - " + String.format("%.2f", data.getCpuAverageUsage()) + " %");
+        cpuButton = (ImageButton) findViewById(R.id.button8);
         cpuButton.setTag("CPU");
-        cpuButton.setHapticFeedbackEnabled(true);
-        ramButton = (Button) findViewById(R.id.button7);
-        ramButton.setText(data.getTotRam() + "Mb RAM");
+        ramButton = (ImageButton) findViewById(R.id.button6);
         ramButton.setTag("Ram");
-        driveButton = (Button) findViewById(R.id.button8);
+        driveButton = (ImageButton) findViewById(R.id.button7);
         driveButton.setTag("DRIVE");
-        driveButton.setText(nd + " Drives - " + String.format("%.2f", data.getDriveAverageUsage()) + " %");
-
+        cpuButton.setHapticFeedbackEnabled(true);
+        driveButton.setHapticFeedbackEnabled(true);
+        ramButton.setHapticFeedbackEnabled(true);
         cpuButton.setOnClickListener(this);
         ramButton.setOnClickListener(this);
         driveButton.setOnClickListener(this);
         cpuButton.setBackgroundColor(getResources().getColor(R.color.lightGreen,getTheme()));
-        cpuButton.setTextColor(getResources().getColor(R.color.colorPrimary,getTheme()));
         ramButton.setBackgroundColor(getResources().getColor(R.color.lightGreen,getTheme()));
-        ramButton.setTextColor(getResources().getColor(R.color.colorPrimary,getTheme()));
         driveButton.setBackgroundColor(getResources().getColor(R.color.lightGreen,getTheme()));
-        driveButton.setTextColor(getResources().getColor(R.color.colorPrimary,getTheme()));
 
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -83,8 +68,6 @@ public class MainActivity extends AppCompatActivity
                         ((Cpu)x).setFrequency(Math.random()*4);
                     }
                 }
-                cpuButton.setText(nc + " CPUs - " + String.format("%.2f", data.getCpuAverageUsage()) + " %");
-                driveButton.setText(nd + " Drives - " + String.format("%.2f", data.getDriveAverageUsage()) + " %");
             }
         }, 100, 10000);
 /* //this dynamically created buttons :( sad face
@@ -190,12 +173,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
         Intent myIntent;
+
         switch((String)v.getTag()){
             case "RAM":
 
                 break;
             case "CPU":
-               // cpuButton.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+               //cpuButton.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                 myIntent = new Intent(MainActivity.this, CpuView.class);
                 startActivity(myIntent);
                 break;

@@ -7,25 +7,46 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-public class DriveView extends AppCompatActivity {
+import java.util.Timer;
+import java.util.TimerTask;
 
+public class DriveView extends AppCompatActivity {
+    TableLayout table;
+    TableRow row ;
+    TextView nameText ;
+    TextView tempText ;
+    TextView usageText ;
+    TextView readText ;
+    TextView writeText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drive_view);
-        TableLayout table = findViewById(R.id.drive_table);
-        table.setStretchAllColumns(true);
+        table = findViewById(R.id.drive_table);
+        table.setStretchAllColumns(true);for(int i=0;i<=MainActivity.data.numDrives;i++) {
+
+            row = new TableRow(this);
+            nameText = new TextView(this);
+            tempText = new TextView(this);
+            usageText = new TextView(this);
+            readText = new TextView(this);
+            writeText = new TextView(this);
+        }
+        Timer timer1 = new Timer();
+        timer1.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                update();
+            }
+        }, 0, 10000);
+    }
+
+    public void update(){
         for(int i=0;i<=MainActivity.data.numDrives;i++){
             Drive drive=null;
             if(i!=0) {
                 drive = (Drive) MainActivity.data.getComponent(MainActivity.data.numCPUs + i);
             }
-            TableRow row = new TableRow(this);
-            TextView nameText = new TextView(this);
-            TextView tempText = new TextView(this);
-            TextView usageText =  new TextView(this);
-            TextView readText =  new TextView(this);
-            TextView writeText =  new TextView(this);
             if(i==0){
 
                 nameText.setText("Name ");
